@@ -18,4 +18,20 @@ examples:
    - empty cart example
    - expired product example
 
+output: |
+  Checkout successful with items:
+  - Cheddar x 2 @ $10.00 each
+  - Samsung TV x 1 @ $500.00 each
+  - Vodafone Card x 2 @ $5.00 each
 
+  Shipping the following items:
+  - Cheddar (1kg)
+  - Samsung TV (10kg)
+
+  Subtotal: $530.00
+  Shipping Fee: $30.00
+  Total Paid: $560.00
+
+  Only 1 available for Cheddar, cannot add 2. insufficient stock.
+  Cart is empty
+  Cannot add Gouda: product is expired.
