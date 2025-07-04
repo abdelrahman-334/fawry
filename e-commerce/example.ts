@@ -8,7 +8,7 @@ const cheddar = new cheese(
   "Cheddar",
   10,
   3,
-  1.0,
+  22.0,
   new Date("2025-12-31"),
   "Hard"
 );
@@ -27,7 +27,7 @@ const tv = new television(2,
   "Samsung TV", 
   500,
   2,
-  10,
+  1000,
   "Samsung",
   "QLED"
 );
