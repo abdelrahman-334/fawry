@@ -12,5 +12,10 @@ steps:
   # run the example file
   - node dist/example.js
 
+examples:
+   - valid example
+   - insufficient stock example
+   - empty cart example
+   - expired product example
 
 
