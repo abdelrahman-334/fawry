@@ -12,7 +12,18 @@ abstract class product {
     get currentStock(): number {
         return this.quantity;
     }
-    
+    public SetStock(newStock: number) {
+        if (newStock < 0) {
+            throw new Error("Stock cannot be negative");
+        }
+        this.quantity = newStock;
+    }
+    public Setprice(newPrice: number) {
+        if (newPrice < 0) {
+            throw new Error("Price cannot be negative");
+        }
+        this.price = newPrice;
+    }
     abstract getDetails(): string;
 }
 
@@ -47,6 +58,9 @@ class cheese  extends shippableProduct implements shippable,expirable {
     }
     getExpiryDate(): string {
         return this.expiry.toDateString();
+    }
+    isExpired(): boolean {
+        return new Date() > this.expiry;
     }
 }
 class television extends shippableProduct implements shippable {

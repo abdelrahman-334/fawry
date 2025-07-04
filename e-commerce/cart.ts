@@ -2,15 +2,22 @@ import cartItem from './types/types.js';
 import shippable from './interfaces/shippable.js';
 import { product as Product}  from './products.js' ;
 import { ShippingService } from './services/shippingService.js';
+import Customer from './customer.js';
 class Cart {
     constructor( private customerId: number) {
     }
     private items: cartItem[] = [];
 
     addItem(product: Product, quantity: number): void {
+         if (
+            typeof (product as any).isExpired === 'function' &&
+            (product as any).isExpired()
+        ) {
+            throw new Error(`Cannot add ${product.name}: product is expired.`);
+        }
         if (quantity <= 0) throw new Error("Quantity must be greater than 0");
         if (quantity > product.currentStock) {
-            throw new Error(`Only ${product.currentStock} available for ${product.name}`);
+            throw new Error(`Only ${product.currentStock} available for ${product.name}, cannot add ${quantity}. insufficient stock.`);
         }
 
         const existingItem = this.items.find(item => item.product.id === product.id);
@@ -51,38 +58,10 @@ class Cart {
         return this.getSubtotal() + this.getShippingFee();
     }
 
-
-    checkout(): void {
-        if (this.isEmpty()) {
-            throw new Error("Cart is empty");
-        }
-
-        const subtotal = this.getSubtotal();
-        const shipping = this.getShippingFee();
-        const total = this.getTotal();
-
-        console.log("Checkout successful with items:");
-        for (const item of this.items) {
-            console.log(`- ${item.product.name} x ${item.quantity} @ $${item.product.price.toFixed(2)} each`);
-        }
-        
-        const shippables: shippable[] = this.items
-        .map(item => item.product)
-        .filter(product =>
-          typeof (product as any).getName === 'function' &&
-          typeof (product as any).getWeight === 'function'
-        )
-        .map(product => product as unknown as shippable);
-
-        if (shippables.length > 0) {
-            ShippingService.shipItems(shippables);
-        }
-        console.log(`\nSubtotal: $${subtotal.toFixed(2)}`);
-        console.log(`Shipping Fee: $${shipping.toFixed(2)}`);
-        console.log(`Total Paid: $${total.toFixed(2)}`);
-
-        this.items = []; 
+    emptyCart(): void {
+        this.items = [];
     }
+   
 }
 
 export default Cart;
