@@ -2,7 +2,7 @@ class Customer {
     constructor(private id: number, private name: string, private email: string, private balance: number) {
     }
  
-    cart: { [productId: number]: number } = {}; // productId: quantity
+    cart: { [productId: number]: number } = {}; 
     get getCustomerInfo(): string {
         return `Customer: ${this.name}, Email: ${this.email}}`;
     }
