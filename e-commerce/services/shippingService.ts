@@ -1,5 +1,5 @@
 
-import Shippable from '../interfaces/shippable';
+import Shippable from '../interfaces/shippable.js';
 
 export class ShippingService {
     static shipItems(items: Shippable[]): void {

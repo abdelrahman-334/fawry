@@ -21,3 +21,5 @@ class Customer {
         this.balance = newBalance;
     }
 }
+
+export default Customer;

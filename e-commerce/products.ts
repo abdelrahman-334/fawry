@@ -78,4 +78,4 @@ class scratchCard extends product {
     }
 }
 
- export default product;
+ export {cheese, television, scratchCard, product};

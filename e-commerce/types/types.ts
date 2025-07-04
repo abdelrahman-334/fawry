@@ -1,4 +1,4 @@
-import product from "../products";
+import {product} from "../products.js";
 
 type cartItem = {
     product: product;

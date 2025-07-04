@@ -1,6 +1,10 @@
-import cartItem from './types/types';
-import Product from './products';
+import cartItem from './types/types.js';
+import shippable from './interfaces/shippable.js';
+import { product as Product}  from './products.js' ;
+import { ShippingService } from './services/shippingService.js';
 class Cart {
+    constructor( private customerId: number) {
+    }
     private items: cartItem[] = [];
 
     addItem(product: Product, quantity: number): void {
@@ -59,9 +63,20 @@ class Cart {
 
         console.log("Checkout successful with items:");
         for (const item of this.items) {
-            console.log(`- ${item.product.name} x ${item.quantity}`);
+            console.log(`- ${item.product.name} x ${item.quantity} @ $${item.product.price.toFixed(2)} each`);
         }
+        
+        const shippables: shippable[] = this.items
+        .map(item => item.product)
+        .filter(product =>
+          typeof (product as any).getName === 'function' &&
+          typeof (product as any).getWeight === 'function'
+        )
+        .map(product => product as unknown as shippable);
 
+        if (shippables.length > 0) {
+            ShippingService.shipItems(shippables);
+        }
         console.log(`\nSubtotal: $${subtotal.toFixed(2)}`);
         console.log(`Shipping Fee: $${shipping.toFixed(2)}`);
         console.log(`Total Paid: $${total.toFixed(2)}`);
@@ -69,3 +84,5 @@ class Cart {
         this.items = []; 
     }
 }
+
+export default Cart;
