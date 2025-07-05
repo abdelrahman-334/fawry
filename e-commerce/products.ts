@@ -43,7 +43,7 @@ abstract class shippableProduct extends product implements shippable {
     }
 }
 
-class cheese  extends shippableProduct implements shippable,expirable {
+class cheese  extends shippableProduct implements expirable {
     constructor(id: number, 
                 name: string, 
                 price: number, 
@@ -63,7 +63,7 @@ class cheese  extends shippableProduct implements shippable,expirable {
         return new Date() > this.expiry;
     }
 }
-class television extends shippableProduct implements shippable {
+class television extends shippableProduct{
     constructor(id: number, 
                 name: string, 
                 price: number, 
